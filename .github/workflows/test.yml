@@ -62,3 +62,36 @@ jobs:
         with:
           name: test-logs-node${{ matrix.node-version }}
           path: logs/
+
+  download-and-package:
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download test report
+        uses: actions/download-artifact@v4
+        with:
+          name: cucumber-report-node20
+          path: all-artifacts/reports/
+
+      - name: Download test logs
+        uses: actions/download-artifact@v4
+        with:
+          name: test-logs-node20
+          path: all-artifacts/logs/
+        continue-on-error: true
+
+      - name: Download failure screenshots
+        uses: actions/download-artifact@v4
+        with:
+          name: failure-screenshots-node20
+          path: all-artifacts/screenshots/
+        continue-on-error: true
+
+      - name: Upload combined artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: complete-test-report
+          path: all-artifacts/
+          retention-days: 30
