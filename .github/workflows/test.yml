@@ -63,7 +63,7 @@ jobs:
           name: test-logs-node${{ matrix.node-version }}
           path: logs/
 
-  send-report:
+  report-summary:
     needs: test
     if: always()
     runs-on: ubuntu-latest
@@ -82,40 +82,55 @@ jobs:
           path: logs/
         continue-on-error: true
 
-      - name: Download failure screenshots
-        uses: actions/download-artifact@v4
-        with:
-          name: failure-screenshots-node20
-          path: screenshots/
-        continue-on-error: true
-
-      - name: Zip artifacts for email
+      - name: Generate test summary
+        if: always()
         run: |
-          zip -r test-report.zip reports/ logs/ screenshots/ 2>/dev/null || zip -r test-report.zip reports/ logs/ 2>/dev/null || zip -r test-report.zip reports/
+          echo "## 🥒 Cucumber BDD Test Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Detail | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Branch** | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Commit** | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Triggered by** | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Test Result** | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
 
-      - name: Send email with report
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "Cucumber BDD Test Report - ${{ github.repository }} - ${{ needs.test.result }}"
-          to: ${{ secrets.REPORT_EMAIL }}
-          from: ${{ secrets.SMTP_USERNAME }}
-          body: |
-            Hello,
+          if [ -f reports/cucumber-report.json ]; then
+            SCENARIOS=$(cat reports/cucumber-report.json | python3 -c "
+          import json,sys
+          data=json.load(sys.stdin)
+          total=passed=failed=0
+          for f in data:
+            for s in f.get('elements',[]):
+              if s.get('type')=='scenario':
+                total+=1
+                steps=s.get('steps',[])
+                if any(st['result']['status']=='failed' for st in steps):
+                  failed+=1
+                else:
+                  passed+=1
+          print(f'{total}|{passed}|{failed}')
+          " 2>/dev/null || echo "0|0|0")
+            TOTAL=$(echo $SCENARIOS | cut -d'|' -f1)
+            PASSED=$(echo $SCENARIOS | cut -d'|' -f2)
+            FAILED=$(echo $SCENARIOS | cut -d'|' -f3)
+            echo "### 📊 Test Results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| Total Scenarios | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
 
-            The Cucumber BDD test pipeline has completed for repository: ${{ github.repository }}
+          if [ -f logs/test-execution.log ]; then
+            echo "### 📝 Execution Log (last 30 lines)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -30 logs/test-execution.log >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
 
-            Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-            Triggered by: ${{ github.actor }}
-            Overall Result: ${{ needs.test.result }}
-            Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-            Please find the test report attached.
-
-            Regards,
-            GitHub Actions
-          attachments: test-report.zip
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📥 **Download full HTML report from the Artifacts section below**" >> $GITHUB_STEP_SUMMARY
