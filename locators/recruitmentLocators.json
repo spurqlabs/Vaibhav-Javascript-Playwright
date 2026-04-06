@@ -1,0 +1,80 @@
+{
+  "login": {
+    "username": "input[name='username']",
+    "password": "input[name='password']",
+    "loginButton": "button[type='submit']",
+    "dashboardHeader": "h6:has-text('Dashboard')",
+    "errorMessage": "p.oxd-alert-content-text"
+  },
+  "nav": {
+    "recruitmentLink": "nav[aria-label='Sidepanel'] a:has-text('Recruitment')",
+    "userDropdown": "span.oxd-userdropdown-tab",
+    "logoutLink": "a:has-text('Logout')"
+  },
+  "vacanciesPage": {
+    "tab": "a:has-text('Vacancies')",
+    "pageHeader": "h5:has-text('Vacancies')",
+    "addButton": "button:has-text('Add')",
+    "vacancyDropdown": "(//label[normalize-space()='Vacancy']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')])[1]",
+    "searchButton": "button:has-text('Search')",
+    "resetButton": "button:has-text('Reset')",
+    "resultsRows": "div.oxd-table-card",
+    "recordsFound": ".orangehrm-horizontal-padding span"
+  },
+  "candidatesPage": {
+    "pageHeader": "h5:has-text('Candidates')",
+    "addButton": "button:has-text('Add')",
+    "candidateNameInput": "(//label[normalize-space()='Candidate Name']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "candidateNameSuggestionOption": "div[role='option']",
+    "vacancyDropdown": "(//label[normalize-space()='Vacancy']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')])[1]",
+    "searchButton": "button:has-text('Search')",
+    "resultsRows": "div.oxd-table-card",
+    "statusCell": "div:nth-child(6)"
+  },
+  "addCandidateForm": {
+    "pageHeader": "h6:has-text('Add Candidate')",
+    "firstName": "input[name='firstName']",
+    "middleName": "input[name='middleName']",
+    "lastName": "input[name='lastName']",
+    "vacancyDropdown": "(//label[normalize-space()='Vacancy']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')])[1]",
+    "email": "(//label[normalize-space()='Email']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "contactNo": "(//label[normalize-space()='Contact Number']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "resume": "input[type='file']",
+    "keywords": "(//label[normalize-space()='Keywords']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "appliedDate": "(//label[normalize-space()='Date of Application']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "notes": "textarea[placeholder='Type here']",
+    "consent": "(//p[contains(normalize-space(),'consent')]/preceding::input[@type='checkbox'])[last()]",
+    "saveButton": "button[type='submit']",
+    "optionByText": "div[role='option']"
+  },
+  "candidateProfile": {
+    "profileHeader": "h6:has-text('Candidate Profile')",
+    "candidateNameValue": "p:has-text('Name') + p",
+    "statusBadge": "p:has-text('Status:')",
+    "shortlistButton": "button:has-text('Shortlist')"
+  },
+  "shortlist": {
+    "pageHeader": "h6:has-text('Shortlist Candidate')",
+    "notes": "textarea[placeholder='Type here']",
+    "saveButton": "button[type='submit']"
+  },
+  "addVacancyForm": {
+    "pageHeader": "h6:has-text('Add Vacancy')",
+    "vacancyName": "(//label[normalize-space()='Vacancy Name']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "jobTitleDropdown": "(//label[normalize-space()='Job Title']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')])[1]",
+    "description": "(//label[normalize-space()='Description']/ancestor::div[contains(@class,'oxd-input-group')]//textarea)[1]",
+    "hiringManagerInput": "(//label[normalize-space()='Hiring Manager']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "hiringManagerSuggestion": "div.oxd-autocomplete-option",
+    "positions": "(//label[normalize-space()='Number of Positions']/ancestor::div[contains(@class,'oxd-input-group')]//input)[1]",
+    "saveButton": "button[type='submit']"
+  },
+  "vacancy": {
+    "editHeader": "h6:has-text('Edit Vacancy')",
+    "attachmentsAddButton": "//h6[normalize-space()='Attachments']/following-sibling::button",
+    "attachmentFileInput": "input[type='file']",
+    "attachmentComment": "textarea[placeholder='Type comment here']",
+    "attachmentSaveButton": "(//h6[normalize-space()='Attachments']/ancestor::div[contains(@class,'orangehrm-attachment')]//button[@type='submit'])[1]",
+    "attachmentsRows": "(//h6[contains(normalize-space(),'Attachments')]/ancestor::div[contains(@class,'oxd-card')])[1]//div[contains(@class,'oxd-table-card')]"
+  }
+}
+

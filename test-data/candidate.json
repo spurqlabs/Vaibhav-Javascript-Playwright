@@ -1,0 +1,23 @@
+{
+  "candidate": {
+    "firstName": "John",
+    "middleName": "M",
+    "lastName": "Doe",
+    "vacancy": "Senior QA Lead",
+    "email": "john.doe@example.com",
+    "contactNo": "1234567890",
+    "resumePath": "test-data/resume/sample_resume.pdf",
+    "keywords": "automation, javascript",
+    "appliedDate": "2026-04-01",
+    "notes": "Test candidate created by automation",
+    "consent": true
+  },
+  "shortlist": {
+    "notes": "Strong candidate, proceed to interview"
+  },
+  "search": {
+    "vacancy": "Senior QA Lead",
+    "expectedStatus": "Application Initiated"
+  }
+}
+
