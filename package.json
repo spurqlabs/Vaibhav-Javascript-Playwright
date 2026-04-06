@@ -1,0 +1,27 @@
+{
+  "name": "orangehrm-recruitment-cucumber-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "pretest": "node utils/cleanReports.js",
+    "test": "cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "pretest:pretty": "node utils/cleanReports.js",
+    "test:pretty": "cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "test:smoke": "node utils/cleanReports.js && cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --tags @smoke --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "test:regression": "node utils/cleanReports.js && cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --tags @regression --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "test:candidate": "node utils/cleanReports.js && cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --tags @candidate --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "test:vacancy": "node utils/cleanReports.js && cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --tags @vacancy --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "test:login": "node utils/cleanReports.js && cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --tags @login --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "test:negative": "node utils/cleanReports.js && cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --tags @negative --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "test:parallel": "node utils/cleanReports.js && cucumber-js --require 'step-definitions/**/*.js' --require 'pages/**/*.js' --parallel 2 --format progress --format json:reports/cucumber-report.json features && node utils/generateReport.js",
+    "report": "node utils/generateReport.js",
+    "lint": "eslint pages/ step-definitions/ utils/ --fix"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^8.10.0",
+    "chai": "^4.3.7",
+    "cucumber-html-reporter": "^5.5.0",
+    "eslint": "^8.57.1",
+    "playwright": "^1.34.0"
+  }
+}

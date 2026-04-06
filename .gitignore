@@ -1,0 +1,10 @@
+node_modules/
+reports/
+screenshots/
+logs/
+.env
+/*.iml
+*.log
+.vscode/
+.idea/
+

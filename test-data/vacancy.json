@@ -1,0 +1,11 @@
+{
+  "vacancy": {
+    "name": "Automation QA Vacancy",
+    "jobTitle": "QA Lead",
+    "description": "Vacancy created by Playwright+Cucumber automation",
+    "hiringManagerSearch": "a",
+    "positions": 2,
+    "attachmentPath": "test-data/resume/sample_resume.pdf",
+    "attachmentComment": "Automation attachment for vacancy"
+  }
+}

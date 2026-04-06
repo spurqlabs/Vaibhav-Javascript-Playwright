@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://opensource-demo.orangehrmlive.com/",
+  "browser": "chromium",
+  "headless": false,
+  "timeout": 30000
+}
+
